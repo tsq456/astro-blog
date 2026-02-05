@@ -4,6 +4,7 @@ const {
   showTopbar = false,
   backHref = "/",
   backLabel = "返回首页",
+  contentClass = "",
 } = Astro.props;
 ---
 <!doctype html>
@@ -24,7 +25,9 @@ const {
           <a class="btn-pill" href={backHref}>{backLabel}</a>
         </div>
       ) : null}
-      <slot />
+      <div class={`content ${contentClass}`}>
+        <slot />
+      </div>
       <footer class="footer">
         <div>
           <div class="signature">个人博客</div>
@@ -51,5 +54,9 @@ const {
     border-bottom: 1px solid var(--line);
     padding-bottom: 20px;
     margin-bottom: 36px;
+  }
+
+  .content {
+    max-width: var(--content-width, 1040px);
   }
 </style>

@@ -33,13 +33,14 @@ const formatDate = (date) =>
     .replace(/\//g, "-");
 ---
 
-<Base title={`分类 | ${category}`} showTopbar backHref="/" backLabel="返回首页">
+<Base title={`分类 | ${category}`} showTopbar backHref="/" backLabel="返回首页" contentClass="content--list">
   <header>
     <h1>{category}</h1>
     <p class="lead">该分类下的文章合集。</p>
   </header>
 
   <section class="list">
+    <div class="section-title">文章</div>
     {posts.map((post) => (
       <article class="card">
         <a class="card-link" href={`/blog/${post.slug}`} aria-label={post.data.title}></a>
@@ -74,7 +75,7 @@ const formatDate = (date) =>
 
   .list {
     display: grid;
-    gap: 22px;
+    gap: 18px;
   }
 
   .card {

@@ -1,0 +1,138 @@
+---
+import Base from "../layouts/Base.astro";
+import { getCollection } from "astro:content";
+import { slugifyCategory } from "../utils/slug";
+
+const posts = (await getCollection("posts"))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const categories = Array.from(new Set(posts.map((post) => post.data.category)))
+  .sort((a, b) => a.localeCompare(b, "zh-CN"));
+
+const formatDate = (date) =>
+  date
+    .toLocaleDateString("zh-CN", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    })
+    .replace(/\//g, "-");
+---
+
+<Base title="归档 | 个人博客" showTopbar backHref="/" backLabel="返回首页" contentClass="content--list">
+  <header>
+    <h1>归档</h1>
+    <p class="lead">按时间整理的文章列表与分类索引。</p>
+  </header>
+
+  <section class="layout">
+    <div class="list">
+      <div class="section-title">文章</div>
+      {posts.map((post) => (
+        <article class="row">
+          <a class="row-link" href={`/blog/${post.slug}`} aria-label={post.data.title}></a>
+          <div class="title">{post.data.title}</div>
+          <time class="date" datetime={post.data.date.toISOString()}>
+            {formatDate(post.data.date)}
+          </time>
+        </article>
+      ))}
+    </div>
+
+    <aside class="sidebar">
+      <div class="list">
+        <div class="section-title">分类</div>
+        <ul class="category-list">
+          {categories.map((category) => (
+            <li>
+              <a class="text-link" href={`/category/${slugifyCategory(category)}`}>{category}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </aside>
+  </section>
+</Base>
+
+<style>
+  h1 {
+    font-family: "Spectral", "Times New Roman", serif;
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    margin: 0 0 10px;
+    letter-spacing: 0.02em;
+  }
+
+  .lead {
+    color: var(--muted);
+    margin: 0 0 28px;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 2.2fr 1fr;
+    gap: 56px;
+    align-items: start;
+  }
+
+  .list {
+    display: grid;
+    gap: 10px;
+  }
+
+  .row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .row-link {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .title {
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+  }
+
+  .row:hover .title {
+    color: var(--accent);
+  }
+
+  .date {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .sidebar {
+    padding: 0;
+  }
+
+  .category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 10px;
+  }
+
+  .category-list a {
+    position: relative;
+    z-index: 2;
+  }
+
+  @media (max-width: 900px) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+
+    .row {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+  }
+</style>

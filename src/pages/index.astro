@@ -18,7 +18,7 @@ const formatDate = (date) =>
     .replace(/\//g, "-");
 ---
 
-<Base title="个人博客 | 首页">
+<Base title="个人博客 | 首页" contentClass="content--list">
   <header class="hero">
     <div>
       <span class="logo">Personal Notes</span>
@@ -26,7 +26,7 @@ const formatDate = (date) =>
       <p class="lead">这里是我的个人博客主页：记录研究、产品、生活与阅读的交汇点。温暖、克制、保持好奇。</p>
       <nav>
         <a class="btn-pill" href="/">首页</a>
-        <a class="btn-pill" href="#">专题</a>
+        <a class="btn-pill" href="/archive">归档</a>
         <a class="btn-pill" href="/about">关于我</a>
         <a class="btn-pill" href="#">订阅</a>
       </nav>
@@ -130,6 +130,11 @@ const formatDate = (date) =>
     font-family: "Spectral", "Times New Roman", serif;
     font-size: 1.6rem;
     margin: 0 0 10px;
+    transition: color 0.2s ease;
+  }
+
+  .post:hover h3 {
+    color: var(--accent);
   }
 
   .post .excerpt {
