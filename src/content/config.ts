@@ -8,7 +8,7 @@ const posts = defineCollection({
     category: z.string(),
     excerpt: z.string(),
     hero: z.string().optional(),
-    readTime: z.string(),
+    readingTime: z.string().optional(),
     draft: z.boolean().optional().default(false),
     tags: z.array(z.string()).optional(),
   }),

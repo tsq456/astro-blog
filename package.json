@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "astro": "^4.15.0",
-    "@astrojs/rss": "^4.0.6"
+    "@astrojs/rss": "^4.0.6",
+    "reading-time": "^1.5.0",
+    "mdast-util-to-string": "^4.0.0"
   }
 }

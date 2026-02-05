@@ -24,7 +24,7 @@ const { Content } = await post.render();
   <article>
     <header>
       <h1>{post.data.title}</h1>
-      <div class="meta">{post.data.date.toLocaleDateString("zh-CN", { year: "numeric", month: "2-digit", day: "2-digit" }).replace(/\//g, "-")} · {post.data.category} · 阅读 {post.data.readTime}</div>
+      <div class="meta">{post.data.date.toLocaleDateString("zh-CN", { year: "numeric", month: "2-digit", day: "2-digit" }).replace(/\//g, "-")} · {post.data.category} · 阅读 {post.data.readingTime ?? "1 分钟"}</div>
       <p class="lead">{post.data.excerpt}</p>
     </header>
 
