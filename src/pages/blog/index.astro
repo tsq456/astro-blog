@@ -1,0 +1,143 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+
+const posts = (await getCollection("posts"))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const formatDate = (date) =>
+  date
+    .toLocaleDateString("zh-CN", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    })
+    .replace(/\//g, "-");
+---
+
+<Base title="博客 | 文章列表">
+  <div class="topbar">
+    <span class="logo">Personal Notes</span>
+    <a class="btn-pill" href="/">返回首页</a>
+  </div>
+
+  <header>
+    <h1>博客</h1>
+    <p class="lead">一列式文章列表，按时间更新，随时补充新的想法与实践。</p>
+  </header>
+
+  <section class="list">
+    {posts.map((post) => (
+      <article class="card card-hover">
+        <div>
+          <div class="meta">{formatDate(post.data.date)} · {post.data.category}</div>
+          <h3>{post.data.title}</h3>
+          <p class="excerpt">{post.data.excerpt}</p>
+          <a class="tag" href={`/blog/${post.slug}`}>Read</a>
+        </div>
+        {post.data.hero ? (
+          <div class="thumb">
+            <Image
+              class="thumb-image"
+              src={post.data.hero}
+              alt="第一章图片"
+              width={800}
+              height={520}
+            />
+          </div>
+        ) : null}
+      </article>
+    ))}
+  </section>
+
+  <footer class="footer">
+    <div>
+      <div class="signature">个人博客</div>
+      <div>持续更新 · 记录长期主义者的生活与思考</div>
+    </div>
+    <div>
+      <div>订阅：newsletter@example.com</div>
+      <div>社交：Instagram / GitHub / X</div>
+    </div>
+  </footer>
+</Base>
+
+<style>
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 20px;
+    margin-bottom: 36px;
+  }
+
+  h1 {
+    font-family: "Spectral", "Times New Roman", serif;
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    margin: 0 0 10px;
+    letter-spacing: 0.02em;
+  }
+
+  .lead {
+    color: var(--muted);
+    margin: 0 0 28px;
+  }
+
+  .list {
+    display: grid;
+    gap: 22px;
+  }
+
+  .card {
+    display: grid;
+    grid-template-columns: 1.4fr 0.8fr;
+    gap: 18px;
+    align-items: center;
+    background: #fffdf8;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 22px 24px;
+  }
+
+  .meta {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .card h3 {
+    font-family: "Spectral", "Times New Roman", serif;
+    font-size: 1.5rem;
+    margin: 8px 0 10px;
+  }
+
+  .excerpt {
+    color: #38404a;
+    margin: 0 0 16px;
+  }
+
+  .thumb {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+
+  .thumb-image {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    display: block;
+  }
+
+  @media (max-width: 860px) {
+    .card {
+      grid-template-columns: 1fr;
+    }
+
+    .thumb-image {
+      height: 200px;
+    }
+  }
+</style>
