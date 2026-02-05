@@ -5,6 +5,9 @@ const siteUrl = process.env.URL || "https://example.com";
 
 export default defineConfig({
   site: siteUrl,
+  devToolbar: {
+    enabled: false,
+  },
   image: {
     domains: ["images.unsplash.com"],
   },

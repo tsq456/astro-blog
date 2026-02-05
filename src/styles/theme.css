@@ -11,6 +11,7 @@
 * { box-sizing: border-box; }
 
 body {
+  min-height: 100vh;
   margin: 0;
   color: var(--ink);
   background:
@@ -19,6 +20,13 @@ body {
     linear-gradient(180deg, var(--paper) 0%, #f9f5ee 50%, #faf7f1 100%);
   font-family: "Manrope", system-ui, -apple-system, sans-serif;
   line-height: 1.7;
+}
+
+html[data-theme="dark"] body {
+  background:
+    radial-gradient(1200px 600px at 10% 10%, rgba(41, 32, 25, 0.35) 0%, transparent 60%),
+    radial-gradient(900px 600px at 90% 20%, rgba(30, 34, 44, 0.4) 0%, transparent 60%),
+    linear-gradient(180deg, var(--paper) 0%, #12151b 60%, #0b0d12 100%);
 }
 
 a {
