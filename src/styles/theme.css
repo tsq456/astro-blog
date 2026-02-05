@@ -22,13 +22,6 @@ body {
   line-height: 1.7;
 }
 
-html[data-theme="dark"] body {
-  background:
-    radial-gradient(1200px 600px at 10% 10%, rgba(41, 32, 25, 0.35) 0%, transparent 60%),
-    radial-gradient(900px 600px at 90% 20%, rgba(30, 34, 44, 0.4) 0%, transparent 60%),
-    linear-gradient(180deg, var(--paper) 0%, #12151b 60%, #0b0d12 100%);
-}
-
 a {
   color: inherit;
 }
@@ -44,7 +37,7 @@ a.text-link:hover {
 }
 
 .container {
-  max-width: 1040px;
+  max-width: 850px;
   margin: 0 auto;
   padding: 48px 24px 96px;
 }
@@ -54,7 +47,7 @@ a.text-link:hover {
 }
 
 .content--detail {
-  --content-width: 750px;
+  --content-width: 700px;
 }
 
 .logo {
@@ -96,10 +89,17 @@ a.text-link:hover {
   border-top: 1px solid var(--line);
   display: flex;
   justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
   gap: 16px;
   color: var(--muted);
   font-size: 0.9rem;
+}
+
+.footer-nav {
+  display: flex;
+  gap: 40px;
+  align-items: center;
 }
 
 .fade-in {
@@ -238,4 +238,9 @@ li code {
   .container {
     padding: 40px 20px 80px;
   }
+}
+
+p img {
+  width: 100%;
+  height: auto;
 }

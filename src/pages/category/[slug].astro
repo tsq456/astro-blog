@@ -40,7 +40,6 @@ const formatDate = (date) =>
   </header>
 
   <section class="list">
-    <div class="section-title">文章</div>
     {posts.map((post) => (
       <article class="card">
         <a class="card-link" href={`/blog/${post.slug}`} aria-label={post.data.title}></a>

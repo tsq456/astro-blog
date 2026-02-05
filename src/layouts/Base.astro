@@ -21,7 +21,7 @@ const {
     <div class="container fade-in">
       {showTopbar ? (
         <div class="topbar">
-          <span class="logo">Personal Notes</span>
+          <span class="logo">Personal Blog</span>
           <a class="btn-pill" href={backHref}>{backLabel}</a>
         </div>
       ) : null}
@@ -33,10 +33,12 @@ const {
           <div class="signature">个人博客</div>
           <div>持续更新 · 记录长期主义者的生活与思考</div>
         </div>
-        <div>
-          <div>订阅：newsletter@example.com</div>
-          <div>社交：Instagram / GitHub / X</div>
-        </div>
+        <nav class="footer-nav">
+          <a href="/" class="text-link">首页</a>
+          <a href="/archive" class="text-link">归档</a>
+          <a href="/about" class="text-link">关于</a>
+          <a href="#" class="text-link">订阅</a>
+        </nav>
       </footer>
     </div>
   </body>
@@ -58,5 +60,6 @@ const {
 
   .content {
     max-width: var(--content-width, 1040px);
+    margin: 0 auto;
   }
 </style>

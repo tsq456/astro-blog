@@ -104,6 +104,11 @@ Remark 插件 (src/remark/reading-time.mjs) → 注入 readingTime
 - **分类 slug 化**: `slugifyCategory()` 支持中文字符和斜杠分隔符（如 "生活 / 观察" → "生活-观察"）
 - **日期格式化**: 使用 `zh-CN` locale
 - **阅读时间**: 由 `reading-time` 库自动计算并注入 frontmatter
+  - 计算公式: `阅读时间（分钟）= 文本字符数 / 每分钟阅读字数`
+  - 配置: 使用每分钟 300 字（中文标准），而非默认的 200 个单词（英文标准）
+  - 位置: 在 `src/remark/reading-time.mjs` 中配置 `wordsPerMinute: 300`
+  - 访问方式: 通过 `remarkPluginFrontmatter.readingTime` 获取（不在 `post.data` 中）
+  - 调整建议: 如需调整阅读速度，修改 `wordsPerMinute` 参数（400-500 更快，200-250 更慢）
 
 ## 重要文件路径
 
