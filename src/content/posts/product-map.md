@@ -2,8 +2,6 @@
 title: 做一张“会呼吸”的产品地图
 date: 2026-02-01
 category: AI / 设计
-excerpt: 从用户旅程到机会地图，如何把一堆想法变成可持续迭代的“生长结构”。
-hero: https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80
 ---
 
 <div class="toc">

@@ -1,7 +1,8 @@
 ---
 import Base from "../../layouts/Base.astro";
 import { getCollection } from "astro:content";
-import { Image } from "astro:assets";
+import { buildExcerpt } from "../../utils/excerpt";
+import { slugifyCategory } from "../../utils/slug";
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
@@ -15,56 +16,27 @@ const { post } = Astro.props;
 const { Content } = await post.render();
 ---
 
-<Base title={`博客详情 | ${post.data.title}`}>
-  <div class="topbar">
-    <span class="logo">Personal Notes</span>
-    <a class="btn-pill" href="/">返回首页</a>
-  </div>
+<Base title={`博客详情 | ${post.data.title}`} showTopbar>
 
   <article>
     <header>
       <h1>{post.data.title}</h1>
-      <div class="meta">{post.data.date.toLocaleDateString("zh-CN", { year: "numeric", month: "2-digit", day: "2-digit" }).replace(/\//g, "-")} · {post.data.category} · 阅读 {post.data.readingTime ?? "1 分钟"}</div>
-      <p class="lead">{post.data.excerpt}</p>
-    </header>
-
-    {post.data.hero ? (
-      <div class="hero">
-        <Image
-          class="hero-image"
-          src={post.data.hero}
-          alt="抽象风景"
-          width={1200}
-          height={720}
-        />
+      <div class="meta">
+        {post.data.date.toLocaleDateString("zh-CN", { year: "numeric", month: "2-digit", day: "2-digit" }).replace(/\//g, "-")}
+        <span> · </span>
+        <a class="text-link" href={`/category/${slugifyCategory(post.data.category)}`}>{post.data.category}</a>
+        <span> · </span>
+        阅读 {post.data.readingTime ?? "1 分钟"}
       </div>
-    ) : null}
+      <p class="lead">{buildExcerpt(post.body)}</p>
+    </header>
 
     <Content />
   </article>
 
-  <footer class="footer">
-    <div>
-      <div class="signature">个人博客</div>
-      <div>持续更新 · 记录长期主义者的生活与思考</div>
-    </div>
-    <div>
-      <div>订阅：newsletter@example.com</div>
-      <div>社交：Instagram / GitHub / X</div>
-    </div>
-  </footer>
 </Base>
 
 <style>
-  .topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--line);
-    padding-bottom: 20px;
-    margin-bottom: 36px;
-  }
-
   h1 {
     font-family: "Spectral", "Times New Roman", serif;
     font-size: clamp(2.4rem, 4vw, 3.2rem);
@@ -78,26 +50,17 @@ const { Content } = await post.render();
     margin-bottom: 24px;
   }
 
+  .meta a {
+    position: relative;
+    z-index: 2;
+  }
+
   .lead {
     font-size: 1.1rem;
     color: #343b44;
     margin-bottom: 28px;
   }
 
-  .hero {
-    margin: 26px 0 34px;
-    border-radius: 18px;
-    overflow: hidden;
-    border: 1px solid var(--line);
-    box-shadow: 0 14px 30px var(--shadow);
-  }
-
-  .hero-image {
-    width: 100%;
-    display: block;
-    height: 320px;
-    object-fit: cover;
-  }
 
   :global(h2),
   :global(h3),
@@ -167,8 +130,5 @@ const { Content } = await post.render();
       grid-template-columns: 1fr;
     }
 
-    .hero-image {
-      height: 240px;
-    }
   }
 </style>

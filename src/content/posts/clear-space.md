@@ -2,8 +2,6 @@
 title: 在高噪声时代，保留一块清晰之地
 date: 2026-01-12
 category: 生活 / 观察
-excerpt: 放慢输入，放大行动，让注意力更像一座被照顾的花园。
-hero: https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1400&q=80
 ---
 
 ## 1. 减少输入，扩大反馈

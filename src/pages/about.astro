@@ -3,11 +3,7 @@ import Base from "../layouts/Base.astro";
 import { Image } from "astro:assets";
 ---
 
-<Base title="关于我 | 个人博客">
-  <div class="topbar">
-    <span class="logo">Personal Notes</span>
-    <a class="btn-pill" href="/">返回首页</a>
-  </div>
+<Base title="关于我 | 个人博客" showTopbar>
 
   <header>
     <h1>关于我</h1>
@@ -64,28 +60,9 @@ import { Image } from "astro:assets";
     </div>
   </section>
 
-  <footer class="footer">
-    <div>
-      <div class="signature">个人博客</div>
-      <div>持续更新 · 记录长期主义者的生活与思考</div>
-    </div>
-    <div>
-      <div>订阅：newsletter@example.com</div>
-      <div>社交：Instagram / GitHub / X</div>
-    </div>
-  </footer>
 </Base>
 
 <style>
-  .topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--line);
-    padding-bottom: 20px;
-    margin-bottom: 36px;
-  }
-
   h1, h2 {
     font-family: "Spectral", "Times New Roman", serif;
     letter-spacing: 0.02em;

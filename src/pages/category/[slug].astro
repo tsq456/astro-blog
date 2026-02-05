@@ -1,0 +1,128 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+import { buildExcerpt } from "../../utils/excerpt";
+import { slugifyCategory } from "../../utils/slug";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts");
+  const categories = Array.from(
+    new Set(posts.map((post) => post.data.category))
+  );
+
+  return categories.map((category) => ({
+    params: { slug: slugifyCategory(category) },
+    props: { category },
+  }));
+}
+
+const { category } = Astro.props;
+
+const posts = (await getCollection("posts"))
+  .filter((post) => !post.data.draft)
+  .filter((post) => slugifyCategory(post.data.category) === slugifyCategory(category))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const formatDate = (date) =>
+  date
+    .toLocaleDateString("zh-CN", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    })
+    .replace(/\//g, "-");
+---
+
+<Base title={`分类 | ${category}`} showTopbar backHref="/" backLabel="返回首页">
+  <header>
+    <h1>{category}</h1>
+    <p class="lead">该分类下的文章合集。</p>
+  </header>
+
+  <section class="list">
+    {posts.map((post) => (
+      <article class="card">
+        <a class="card-link" href={`/blog/${post.slug}`} aria-label={post.data.title}></a>
+        <div>
+          <h3>{post.data.title}</h3>
+          <p class="excerpt">{buildExcerpt(post.body)}</p>
+          <div class="meta">
+            <time datetime={post.data.date.toISOString()}>
+              {formatDate(post.data.date)}
+            </time>
+            <span> · </span>
+            <a class="text-link" href={`/category/${slugifyCategory(post.data.category)}`}>{post.data.category}</a>
+          </div>
+        </div>
+      </article>
+    ))}
+  </section>
+</Base>
+
+<style>
+  h1 {
+    font-family: "Spectral", "Times New Roman", serif;
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    margin: 0 0 10px;
+    letter-spacing: 0.02em;
+  }
+
+  .lead {
+    color: var(--muted);
+    margin: 0 0 28px;
+  }
+
+  .list {
+    display: grid;
+    gap: 22px;
+  }
+
+  .card {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .card:first-child {
+    padding-top: 0;
+  }
+
+  .card:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .card h3 {
+    font-family: "Spectral", "Times New Roman", serif;
+    font-size: 1.6rem;
+    margin: 0 0 10px;
+  }
+
+  .excerpt {
+    color: #38404a;
+    margin: 0 0 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .meta {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .meta a {
+    position: relative;
+    z-index: 2;
+  }
+
+  .card-link {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .card {
+    position: relative;
+  }
+</style>
